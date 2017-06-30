@@ -1,0 +1,6 @@
+1. Run program in a directory (or give it a target directory)
+2. Optional parameter: --no-ext
+3. Optional argument: categories
+4. Creates SubDirectory: Listings
+5. All.txt (all files)
+6. {Cat-name}.txt for each category
