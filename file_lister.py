@@ -18,7 +18,6 @@ file_ext = ".txt"
 ignore_patterns = []
 has_ignore_patterns = False
 categories = {}
-sorted_files = {}
 has_categories = False
 
 if(len(sys.argv) > 1):
@@ -38,11 +37,10 @@ if(len(sys.argv) > 1):
     if(os.path.exists(categories_path)):
         has_categories = True
         # Read in categories
-        for(dirpath, dirnames, filename) in walk(categories_path):
-            categories[filename] = open(os.path.join(categories_path, filename)).read()
-            sorted_files[filename] = []
+        for(dirpath, dirnames, filenames) in walk(categories_path):
+            for file in filenames:
+                categories[file] = open(os.path.join(categories_path, file)).read().rstrip().split(",")
             break
-        print(categories)
     files = []
     for(dirpath, dirnames, filenames) in walk(dir):
         files.extend(filenames)
@@ -60,5 +58,18 @@ if(len(sys.argv) > 1):
     all = open(os.path.join(target_dir, all_files) + file_ext, 'w+')
     all.write(", ".join(files))
     all.close()
+    if(has_categories):
+        for key in categories:
+            matches = []
+            terms = categories[key]
+            for i in range(0, len(terms)):
+                terms[i] = terms[i].strip()
+            for term in terms:
+                for file in files:
+                    if(term in file):
+                        matches.append(file)
+            cat_file = open(os.path.join(target_dir, key), 'w+')
+            cat_file.write(", ".join(matches))
+            cat_file.close()
 else:
     print("Please provide target directory")
