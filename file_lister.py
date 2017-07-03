@@ -18,6 +18,7 @@ file_ext = ".txt"
 ignore_patterns = []
 has_ignore_patterns = False
 categories = {}
+sorted_files = {}
 has_categories = False
 
 if(len(sys.argv) > 1):
@@ -33,11 +34,16 @@ if(len(sys.argv) > 1):
             ignore_patterns = open(ignore_patterns_file, "r").read().splitlines()
             has_ignore_patterns = True
     # Adapted from: https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
-    files = []
     categories_path = os.path.join(dir, cat_dir)
     if(os.path.exists(categories_path)):
+        has_categories = True
         # Read in categories
-        print("TODO: Implement reading in categories")
+        for(dirpath, dirnames, filename) in walk(categories_path):
+            categories[filename] = open(os.path.join(categories_path, filename)).read()
+            sorted_files[filename] = []
+            break
+        print(categories)
+    files = []
     for(dirpath, dirnames, filenames) in walk(dir):
         files.extend(filenames)
         break
