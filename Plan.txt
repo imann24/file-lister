@@ -1,6 +1,0 @@
-1. Run program in a directory (or give it a target directory)
-2. Optional parameter: --no-ext
-3. Checks for a directory called "categories", if it finds it reads all the text files inside. Creates a category which matches substrings (comma-separated for each text file)
-4. Creates SubDirectory: Listings
-5. All.txt (all files)
-6. {Category-Name}.txt for each category
